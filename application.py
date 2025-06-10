@@ -1,29 +1,28 @@
 import random
 
-def main():
-    print("Welcome to the guessing game.")
-    n = random.randint(1, 100)
-    tries = 0
-    done = False
-    while done == False:
-        g = input("Enter guess (1-100) or exit: ")
-        if g == "exit":
-            print("Number was", n)
-            done = True
+def play_game():
+    number = random.randint(1, 100)
+    attempts = 0
+    print("Guess the number (1-100). Type 'exit' to quit.")
+
+    while True:
+        guess = input("Your guess: ").strip()
+        if guess.lower() == 'exit':
+            print(f"Game over. The number was {number}.")
+            break
+        # Intentional flaw: does not check for negative numbers or numbers > 100
+        if not guess.isdigit():
+            print("Invalid input. Enter a number.")
+            continue
+        guess = int(guess)
+        attempts += 1
+        if guess < number:
+            print("Too low!")
+        elif guess > number:
+            print("Too high!")
         else:
-            try:
-                g = int(g)
-                tries = tries + 1
-                if g == n:
-                    print("You win in", tries, "tries")
-                    done = True
-                else:
-                    if g < n:
-                        print("Higher")
-                    if g > n:
-                        print("Lower")
-            except:
-                print("Not a number")
+            print(f"Correct! Attempts: {attempts}")
+            break
 
 if __name__ == "__main__":
-    main()
+    play_game()
